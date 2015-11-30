@@ -8,7 +8,7 @@ This is testbench for keccak_devide.v
 
 module test_keccak_devide;
 
-    // Inputs
+   // Inputs
    reg clk;
    reg reset;
    reg [511:0] in512;
@@ -16,54 +16,69 @@ module test_keccak_devide;
    reg 	       en;
 
 
-    // Outputs
+   // Outputs
    wire [31:0] out32;
 
 
-    // Var
-    integer i;
+   // Instantiate the Unit Under Test (UUT)
+   keccak_devide keccak_devide(clk,reset,in512,out32,num,en);
+
+   initial begin
+      // Initialize Inputs
+      clk = 0;
+      reset = 0;
+      in512 = 0;
+      num = 0;
+      en = 0;
+
+      // Wait 100 ns for global reset to finish
+      #100;
+
+      // Add stimulus here
+      @ (negedge clk);
+
+      //test vector
+      reset = 1; #(`P); reset = 0;
+      in512 = 512'h 0000_1111_2222_3333_4444_5555_6666_7777_8888_9999_AAAA_BBBB_CCCC_DDDD_EEEE_FFFF_0000_1111_2222_3333_4444_5555_6666_7777_8888_9999_AAAA_BBBB_CCCC_DDDD_EEEE_FFFF;
+
+      #10;
+      en = 1;
+
+      #100;
+      num = 0;
+      #100;
+      num = 1;
+      #100;
+      num = 2;
+      #100;
+      num = 3;
+      #100;
+      num = 4;
+      #100;
+      num = 5;
+      #100;
+      num = 6;
+      #100;
+      num = 7;
+      #100;
+      num = 8;
+      #100;
+      num = 9;
+      #100;
+      num = 10;
+      #100;
+      num = 11;
+      #100;
+      num = 12;
+      #100;
+      num = 13;
+      #100;
+      num = 14;
+      #100;
+      num = 15;
 
 
-    // Instantiate the Unit Under Test (UUT)
-    keccak_devide keccak_devide(clk,reset,in512,out32,num,en);
-
-    initial begin
-        // Initialize Inputs
-       clk = 0;
-       reset = 0;
-       in512 = 0;
-       num = 0;
-       en = 0;
-
-
-        // Wait 100 ns for global reset to finish
-        #100;
-
-        // Add stimulus here
-        @ (negedge clk);
-
-        //test vector
-       reset = 1; #(`P); reset = 0;
-       in512 = 512'h 0000_1111_2222_3333_4444_5555_6666_7777_8888_9999_AAAA_BBBB_CCCC_DDDD_EEEE_FFFF_0000_1111_2222_3333_4444_5555_6666_7777_8888_9999_AAAA_BBBB_CCCC_DDDD_EEEE_FFFF;
-        
-        
-       #10;
-       en = 1;
-
-       #100;
-       num = 0;
-       #100;
-       num = 1;
-       #100;
-       num = 2;
-       #100;
-       num = 3;
-       #100;
-       num = 4;
-       #100;
-       num = 5;
-
-    end
+   end
 
 
    initial $monitor($time, " num = %h out32 = %h",num,out32);
