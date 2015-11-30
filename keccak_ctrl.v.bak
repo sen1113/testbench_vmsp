@@ -30,7 +30,7 @@ module keccak_ctrl(clk,reset,
 			       .reset(reset),
 			       .in512(in512),
 			       .out32(hash_out32),
-			       .num(hash_num),
+			       .hash_num(hash_num),
 			       .en(devide_en)
 			       );
 

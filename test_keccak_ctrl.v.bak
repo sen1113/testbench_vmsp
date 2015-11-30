@@ -12,7 +12,7 @@ module test_keccak_ctrl;
    reg clk;
    reg reset;
    reg [511:0] in512;
-   reg [4:0]   hash_num;
+   reg [5:0]   hash_num;
    reg 	      keccak_en;
    reg 	      devide_en;
 
@@ -61,10 +61,14 @@ module test_keccak_ctrl;
       devide_en = 1;
       hash_num = 0;
 
-	end 
-	initial $monitor ($time, "keccak_en = %h, devide_en = %h, hash_num = %h, hash_out32 = %h",keccak_en,devide_en,hash_num,hash_out32);
-	always #(`P/2) clk = ~ clk;
+    always #(`P/2) clk = ~ clk;
 
+    task error;
+        begin
+              $display("E");
+              $finish;
+        end
+    endtask
 
 
 endmodule
