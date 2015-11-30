@@ -5,7 +5,7 @@ module keccak_devide(clk, reset, in512, out32, num, en);
    input [511:0] in512;//from keccak_ctrl
    output [31:0] out32;//to keccak_ctrl
 
-   reg[31:0] 		 out;
+   reg 		 out;
 
 
 
