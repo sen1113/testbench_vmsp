@@ -1,0 +1,90 @@
+/*
+This is testbench for keccak_devide.v
+
+ */
+
+`timescale 1ns / 1ps
+`define P 20
+
+module test_keccak_devide;
+
+    // Inputs
+   reg clk;
+   reg reset;
+   reg [511:0] in512;
+   reg [5:0]   num;
+   reg 	       en;
+
+
+    // Outputs
+   wire [31:0] out32;
+
+
+    // Var
+    integer i;
+
+    // Instantiate the Unit Under Test (UUT)
+    keccak_devide keccak_devide(
+				.clk(clk);
+				.reset(reset);
+				.in512(in512);
+				.out32(out32);
+				.num(num);
+				.en(en);
+    );
+
+    initial begin
+        // Initialize Inputs
+       clk = 0;
+       reset = 0;
+       in = 0;
+       num = 0;
+       en = 0;
+
+
+        // Wait 100 ns for global reset to finish
+        #100;
+
+        // Add stimulus here
+        @ (negedge clk);
+
+        //test vector
+       reset = 1; #(`P); reset = 0;
+       in512 = 512'h 0000_1111_2222_3333_4444_5555_6666_7777_8888_9999_AAAA_BBBB_CCCC_DDDD_EEEE_FFFF_0000_1111_2222_3333_4444_5555_6666_7777_8888_9999_AAAA_BBBB_CCCC_DDDD_EEEE_FFFF;
+
+       #10;
+       en = 1;
+
+       #10;
+       num = 0;
+       #10;
+       num = 1;
+       #10;
+       num = 2;
+       #10;
+       num = 3;
+       #10;
+       num = 4;
+       #10;
+       num = 5;
+
+    end
+
+
+   initial $monitor($time, " num = %h out32 = %h",num,out32);
+
+
+
+   always #(`P/2) clk = ~ clk;
+
+   task error;
+      begin
+         $display("E");
+         $finish;
+      end
+   endtask
+
+
+endmodule
+
+`undef P
