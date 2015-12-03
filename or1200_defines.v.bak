@@ -374,7 +374,7 @@
 //
 // Implement l.cust5 ALU instruction
 //
-`define OR1200_IMPL_ALU_CUST5
+//`define OR1200_IMPL_ALU_CUST5
 
 //
 // Implement l.extXs and l.extXz instructions

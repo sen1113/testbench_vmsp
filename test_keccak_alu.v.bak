@@ -26,7 +26,7 @@ module test_keccak_alu;
    reg [4:0] 			    cust5_op;
    reg [5:0] 			    cust5_limm;
    reg 				    carry;
-   reg flag;
+
    // Outputs
    wire [`width-1:0] 		    result;
    wire 			    flagforw;
