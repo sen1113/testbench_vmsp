@@ -16,9 +16,9 @@ module test_keccak_alu;
    // Inputs
 //   reg clk;
 //   reg reset;
-   reg [width-1:0] a;
-   reg [width-1:0] b;
-   reg [width-1:0] mult_mac_result;
+   reg [`width-1:0] a;
+   reg [`width-1:0] b;
+   reg [`width-1:0] mult_mac_result;
    reg 		   macrc_op;
    reg [`OR1200_ALUOP_WIDTH-1:0]    alu_op;
    reg [`OR1200_ALUOP2_WIDTH-1:0]   alu_op2;
@@ -71,10 +71,10 @@ module test_keccak_alu;
       #100;
 
       // Add stimulus here
-      @ (negedge clk);
+      //@ (negedge clk);
 
       //test vector
-      reset = 1; #(`P); reset = 0;
+      
       cust5_limm = 5'b00001;
 
       #10;
@@ -92,7 +92,7 @@ module test_keccak_alu;
 
 
 
-   always #(`P/2) clk = ~ clk;
+//   always #(`P/2) clk = ~ clk;
 
    task error;
       begin
