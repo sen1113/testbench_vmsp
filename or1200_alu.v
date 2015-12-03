@@ -192,13 +192,13 @@ assign result_and = a & b;
 
 
 // connect keccak_en & cust5_en
-`ifdef OR1200_IMPL_ALU_cust5
+//`ifdef OR1200_IMPL_ALU_cust5
    assign keccak_en = cust5_en;
    assign out32 = a; //a 32bit
    assign in_ready = start;
    assign is_last = last;
   assign hash_num = num;
-`endif
+//`endif
 
 
 //
