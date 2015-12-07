@@ -1141,7 +1141,7 @@ always @(id_insn) begin
 	endcase
 end
 
-//
+s//
 // Decode of comp_op
 //
 always @(posedge clk or `OR1200_RST_EVENT rst) begin

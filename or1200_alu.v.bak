@@ -101,6 +101,7 @@ reg	[width-1:0]		extended;
    reg 				cust5_en;
    reg 				start;
    reg 				last;
+   reg     num;
 `endif
 reg				flagforw;
 reg				flagcomp;
@@ -196,6 +197,7 @@ assign result_and = a & b;
    assign out32 = a; //a 32bit
    assign in_ready = start;
    assign is_last = last;
+  assign hash_num = num;
 `endif
 
 
@@ -542,7 +544,7 @@ always@(cust5_op or cust5_limm or a or b)begin
        end
      5'b01000://store mode
        begin
-	  hash_num = cust5_limm[4:0];//to keccak_devide
+	  num = cust5_limm[4:0];//to keccak_devide
        end
    endcase
 
