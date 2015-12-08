@@ -44,8 +44,8 @@
 //
 // $Log: or1200_cpu.v,v $
 // Revision 2.0  2010/06/30 11:00:00  ORSoC
-// Major update: 
-// Structure reordered and bugs fixed. 
+// Major update:
+// Structure reordered and bugs fixed.
 
 // synopsys translate_off
 `include "timescale.v"
