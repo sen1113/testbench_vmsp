@@ -12,20 +12,20 @@ module test_total1;
     // Inputs
    reg clk;
    reg reset;
-   reg [511:0] in512;
-   reg [4:0]   hash_num;
    reg 	      keccak_en;
-   reg 	      devide_en;
+   reg hash_num;
+   reg [31:0]   keccak_data32;
+   reg 	      is_last;
+
 
     // Outputs
-   wire       byte_num;
-   wire       in_ready;
-   wire [31:0] hash_out32;
+
+   wire [31:0] keccak_dataout;
 
 
 
     // Instantiate the Unit Under Test (UUT)
-module or1200_cpu_tmp(
+or1200_cpu_tmp or1200_cpu_tmp(
 		      // Clk & Rst
 		      clk, rst,
 		      hash_num,keccak_en,keccak_data32,is_last,keccak_dataout
