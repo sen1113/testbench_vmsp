@@ -349,9 +349,9 @@ input 				rst;
 
    wire 			in_ready;
 //   wire 			is_last;
-   wire[1:0] 			byte_num;
+   wire 			byte_num;
    wire 			buffer_full;
-   wire[511:0] 			hash512;
+   wire 			hash512;
    wire 			out_ready;
 
 //   wire 			hash_num;//if keccak_devide enabled
