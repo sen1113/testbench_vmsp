@@ -52,10 +52,10 @@
 // synopsys translate_on
 `include "or1200_defines.v"
 
-module or1200_cpu_tmp(
+module or1200_cpu(
 	// Clk & Rst
 	clk, rst,
-		  hash_num,keccak_en,keccak_data32,is_last,keccak_dataout
+		  
 	// // Insn interface
 	// ic_en,
 	// icpu_adr_o, icpu_cycstb_o, icpu_sel_o, icpu_tag_o,
@@ -101,18 +101,6 @@ parameter boot_adr = `OR1200_BOOT_ADR;
 //
 input 				clk;
 input 				rst;
-
-
-   //test input for testbench
-   input   			hash_num;//from alu
-   input			keccak_en;//from alu
-
-   input 			keccak_data32;//from alu out32
-   input 			is_last;//from alu is_last
-
-   //test output for testbench
-   output			keccak_dataout;//to wbmux
-
 
 /// /
 // // Insn (IC) interface
@@ -348,18 +336,18 @@ input 				rst;
 // wire				abort_mvspr;
 
 
-//   wire 			keccak_en;
-//   wire 			keccak_data32;
+   wire 			keccak_en;
+   wire 			keccak_data32;
 
    wire 			in_ready;
-//   wire 			is_last;
+   wire 			is_last;
    wire 			byte_num;
    wire 			buffer_full;
    wire 			hash512;
    wire 			out_ready;
 
-//   wire 			hash_num;//if keccak_devide enabled
-//   wire 			keccak_dataout;
+   wire 			hash_num;//if keccak_devide enabled
+   wire 			keccak_dataout;
 
 // //
 // // Send exceptions to Debug Unit

@@ -1,6 +1,6 @@
 /*
 This is testbench for keccak_ctrl.v
- 
+
  */
 
 `timescale 1ns / 1ps
@@ -34,7 +34,7 @@ module test_keccak_ctrl;
         .keccak_en(keccak_en),
         .devide_en(devide_en),
         .byte_num(byte_num),
-      	.hash_out32(hash_out32),   
+      	.hash_out32(hash_out32),
 	.in_ready(in_ready)
     );
 
@@ -46,7 +46,7 @@ module test_keccak_ctrl;
         hash_num = 0;
         keccak_en = 0;
         devide_en = 0;
-        
+
         // Wait 100 ns for global reset to finish
         #100;
 
@@ -61,7 +61,7 @@ module test_keccak_ctrl;
       devide_en = 1;
       hash_num = 0;
 
-	end 
+	end
 	initial $monitor ($time, "keccak_en = %h, devide_en = %h, hash_num = %h, hash_out32 = %h",keccak_en,devide_en,hash_num,hash_out32);
 	always #(`P/2) clk = ~ clk;
 
