@@ -48,20 +48,22 @@ or1200_cpu_tmp or1200_cpu_tmp(
         // Add stimulus here
         @ (negedge clk);
       //test vector
-      rst = 1; #(`P); rst = 0;
-       #100;
-       keccak_data32 = 32'h FFFF_0000;
-       #10;
+        rst = 1; #(`P); rst = 0;
+       #(`P);
+//       keccak_data32 = 32'h FFFF_0000;
+       #(`P);
        keccak_en = 1;
 
 
 
-      #100;
+      #(`P);
        is_last = 1;keccak_en = 0;
 
-       #200
+       #(`P)
+       //@ (negedge clk);
         // SHA3-512("The quick brown fox jumps over the lazy dog.")
         rst = 1; #(`P); rst = 0;
+        
         keccak_en = 1; is_last = 0;
         keccak_data32 = "The "; #(`P);
         keccak_data32 = "quic"; #(`P);
