@@ -85,10 +85,10 @@ output				ov_we;
 input				carry;
    input 			flag;
    output     keccak_en;
-   output     out32;
+   output[31:0]     out32;
    output     in_ready;
    output     is_last;
-   output     hash_num;
+   output[5:0]     hash_num;
 
 //
 // Internal wires and regs

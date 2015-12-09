@@ -83,9 +83,9 @@ output				cy_we;
 output				ovforw;
 output				ov_we;
 input				carry;
-input         flag;
+   input 			flag;
    output     keccak_en;
-   output     out32;
+   output[31:0]     out32;
    output     in_ready;
    output     is_last;
    output     hash_num;
@@ -101,7 +101,7 @@ reg	[width-1:0]		extended;
    reg 				cust5_en;
    reg 				start;
    reg 				last;
-   reg     num;
+   reg [5:0] 			num;
 `endif
 reg				flagforw;
 reg				flagcomp;
@@ -192,13 +192,13 @@ assign result_and = a & b;
 
 
 // connect keccak_en & cust5_en
-`ifdef OR1200_IMPL_ALU_cust5
+//`ifdef OR1200_IMPL_ALU_cust5
    assign keccak_en = cust5_en;
    assign out32 = a; //a 32bit
    assign in_ready = start;
    assign is_last = last;
-  assign hash_num = num;
-`endif
+  assign hash_num = num;//num = cust5_limm
+//`endif
 
 
 //
@@ -544,13 +544,13 @@ always@(cust5_op or cust5_limm or a or b)begin
        end
      5'b01000://store mode
        begin
-	  num = cust5_limm[4:0];//to keccak_devide
+	  num = cust5_limm[5:0];//to keccak_devide
        end
    endcase
 
    //TODO:
    //result_cust5=hash value;//
-   //start maybe unnecessary
+
 
      //
 end // always @ (cust5_op or cust5_limm or a or b)

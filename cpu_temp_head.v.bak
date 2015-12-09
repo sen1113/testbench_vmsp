@@ -360,7 +360,7 @@ input 				rst;
    wire[31:0] 			keccak_data32;
 
 
-   wire [5:0]			hash_num;
+   wire [4:0]			hash_num;
    wire 			in_ready;
    wire 			is_last;
    wire[1:0] 			byte_num;

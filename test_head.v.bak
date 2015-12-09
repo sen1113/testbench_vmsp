@@ -36,7 +36,7 @@ module test_head;
 
     // Instantiate the Unit Under Test (UUT)
 or1200_cpu_tmp_head or1200_cpu_tmp_head(
-					clk, rst, operand_a,operand_b,mult_mac_result,macrc_op,alu_op,alu_op2,comp_op,cust5_op,cust5_limm,carry,flag,keccak_dataout
+					clk, rst, operand_a,operand_b,mult_mac_result,macrc_op,alu_op,cust5_op,cust5_limm,carry,flag,keccak_dataout
 					);
 
     initial begin
