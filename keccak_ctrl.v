@@ -10,7 +10,7 @@
 
 module keccak_ctrl(clk,reset,
 		   in512,hash_num,keccak_en,devide_en,
-		   byte_num,hash_out32,in_ready);
+		   byte_num,in_ready,hash_out32);
    input clk, reset;
    input [511:0] in512;
    input [5:0] 	 hash_num;//from alu (=cust5_limm[5:0])

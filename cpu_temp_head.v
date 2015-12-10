@@ -614,7 +614,7 @@ or1200_alu or1200_alu(
 	.carry(carry),
 		      .keccak_en(keccak_en),//wired
 		      .out32(keccak_data32),//wired
-		      .in_ready(in_ready),
+		      //.in_ready(in_ready),
 		      .is_last(is_last),//wired
 		      .hash_num(hash_num)//wired
 );

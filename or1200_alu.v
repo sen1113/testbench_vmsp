@@ -58,7 +58,7 @@ module or1200_alu(
 	result, flagforw, flag_we,
 	ovforw, ov_we,
 	cyforw, cy_we, carry, flag,
-		  keccak_en,out32,in_ready,is_last,hash_num
+		  keccak_en,out32,is_last,hash_num
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
@@ -99,7 +99,7 @@ reg	[width-1:0]		extended;
 `ifdef OR1200_IMPL_ALU_CUST5
    reg [width-1:0] 		result_cust5;
    reg 				cust5_en;
-   reg 				start;
+//   reg 				start;
    reg 				last;
    reg [5:0] 			num;
 `endif
@@ -195,9 +195,9 @@ assign result_and = a & b;
 //`ifdef OR1200_IMPL_ALU_cust5
    assign keccak_en = cust5_en;
    assign out32 = a; //a 32bit
-   assign in_ready = start;
+  // assign in_ready = start;
    assign is_last = last;
-  assign hash_num = num;//num = cust5_limm
+   assign hash_num = num;//num = cust5_limm
 //`endif
 
 
@@ -528,23 +528,25 @@ always@(cust5_op or cust5_limm or a or b)begin
    casez(cust5_op)
      5'b00100://Start Keccak
        begin//patern 1 for keccak
-	  start = 1;
+	  //start = 1;
 	  last = 0;
 	  cust5_en = 1;
        end
-     5'b00010:
-       begin//Keccak in progress
-	  cust5_en = 1;
-       end
+     // 5'b00010:
+     //   begin//Keccak in progress
+     // 	  last = 0;
+     // 	  cust5_en = 1;
+     //   end
      5'b00001://Finish Keccak
        begin
-	  start = 0;
+	  //start = 0;
 	  last = 1;
-	  cust5_en = 0;
+	 // cust5_en = 0;
        end
      5'b01000://store mode
        begin
 	  num = cust5_limm[5:0];//to keccak_devide
+	  cust5_en = 0;
        end
    endcase
 
