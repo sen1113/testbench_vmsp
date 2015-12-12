@@ -63,7 +63,7 @@ or1200_cpu_tmp_head or1200_cpu_tmp_head(
        //test vector
        rst = 1; #(`P); rst = 0;
        #(`P);
-       alu_op = 5'b1_0010;
+       
        //`define OR1200_ALUOP_CUST5	5'b1_0010 // l.cust5
        //`define OR1200_OR32_CUST5             6'b111100
 
@@ -71,12 +71,12 @@ or1200_cpu_tmp_head or1200_cpu_tmp_head(
        //template : operand_a = ; cust5_op = ; cust5_limmm = ;#(`P);
        // SHA3-512("The quick brown fox jumps over the lazy dog.")
 
-       cust5_op = 5'b00100;
+       
        #(`P);
        alu_op = 5'b1_0010; cust5_op = 5'b00100; operand_a = "The ";#(`P);//HEAD
        alu_op = 5'b1_0010; cust5_op = 5'b00010; operand_a = "quic";#(`P);
        alu_op = 5'b1_0010; cust5_op = 5'b00010; operand_a = "k br";#(`P);
-       alu_op = 5'b1_0010; cust5_op = 5'b00010; operand_a = "own";#(`P);
+       alu_op = 5'b1_0010; cust5_op = 5'b00010; operand_a = "own ";#(`P);
        alu_op = 5'b1_0010; cust5_op = 5'b00010; operand_a = "fox "; #(`P);
        alu_op = 5'b1_0010; cust5_op = 5'b00010; operand_a = "jump"; #(`P);
        alu_op = 5'b1_0010; cust5_op = 5'b00010; operand_a = "s ov"; #(`P);

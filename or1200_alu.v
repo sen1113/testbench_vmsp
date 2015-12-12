@@ -86,7 +86,7 @@ input				carry;
    input 			flag;
    output     keccak_en;
    output[31:0]     out32;
-   output     in_ready;
+   //output     in_ready;
    output     is_last;
    output[5:0]     hash_num;
 
@@ -532,11 +532,11 @@ always@(cust5_op or cust5_limm or a or b)begin
 	  last = 0;
 	  cust5_en = 1;
        end
-     // 5'b00010:
-     //   begin//Keccak in progress
-     // 	  last = 0;
-     // 	  cust5_en = 1;
-     //   end
+      5'b00010:
+        begin//Keccak in progress
+      	  last = 0;
+      	  cust5_en = 1;
+        end
      5'b00001://Finish Keccak
        begin
 	  //start = 0;
@@ -546,7 +546,7 @@ always@(cust5_op or cust5_limm or a or b)begin
      5'b01000://store mode
        begin
 	  num = cust5_limm[5:0];//to keccak_devide
-	  cust5_en = 0;
+	  last = 0;cust5_en = 0;
        end
    endcase
 

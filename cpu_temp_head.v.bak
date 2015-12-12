@@ -360,7 +360,7 @@ input 				rst;
    wire[31:0] 			keccak_data32;
 
 
-   wire [4:0]			hash_num;
+   wire [5:0]			hash_num;
    wire 			in_ready;
    wire 			is_last;
    wire[1:0] 			byte_num;
@@ -614,7 +614,7 @@ or1200_alu or1200_alu(
 	.carry(carry),
 		      .keccak_en(keccak_en),//wired
 		      .out32(keccak_data32),//wired
-		      .in_ready(in_ready),
+		      //.in_ready(in_ready),
 		      .is_last(is_last),//wired
 		      .hash_num(hash_num)//wired
 );
