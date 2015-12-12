@@ -11,7 +11,6 @@ This is testbench for or1200_alu.v to or1200_wbmux.v
 `define OR1200_ALUOP_WIDTH   5
 `define OR1200_ALUOP2_WIDTH  4
 `define OR1200_COMPOP_WIDTH   4
-`define OR1200_RFWBOP_WIDTH   4
 module test_total;
 
     // Inputs
