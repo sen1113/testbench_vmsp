@@ -85,7 +85,7 @@ input	[width-1:0]		muxin_c;
 input	[width-1:0]		muxin_d;
 input	[width-1:0]		muxin_e;
 
-   input [31:0] 		muxin_keccak;
+   input [width-1:0] 		muxin_keccak;
 
 
 output	[width-1:0]		muxout;
@@ -116,7 +116,7 @@ end
 //
 // Write-back multiplexer
 //
-always @(muxin_a or muxin_b or muxin_c or muxin_d or muxin_e or rfwb_op) begin
+always @(muxin_a or muxin_b or muxin_c or muxin_d or muxin_e or muxin_keccak or rfwb_op) begin
 `ifdef OR1200_ADDITIONAL_SYNOPSYS_DIRECTIVES
 	casez(rfwb_op[`OR1200_RFWBOP_WIDTH-1:1]) // synopsys parallel_case infer_mux
 `else
