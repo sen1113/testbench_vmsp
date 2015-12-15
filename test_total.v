@@ -29,6 +29,7 @@ module test_total;
    reg 				  carry;
    reg 				  flag;
    reg [`OR1200_RFWBOP_WIDTH-1:0] rfwb_op;
+   reg wb_freeze;
    // Outputs
 
    wire [31:0] 			  ex_pc;
@@ -37,7 +38,7 @@ module test_total;
 
     // Instantiate the Unit Under Test (UUT)
 or1200_cpu_tmp_total or1200_cpu_tmp_total(
-					  clk, rst, operand_a,operand_b,mult_mac_result,macrc_op,alu_op,alu_op2,comp_op,cust5_op,cust5_limm,carry,flag,rfwb_op,ex_pc,rf_dataw
+					  clk, rst, operand_a,operand_b,mult_mac_result,macrc_op,alu_op,alu_op2,comp_op,cust5_op,cust5_limm,carry,flag,rfwb_op,ex_pc,rf_dataw,wb_freeze
 					  );
 
    initial begin

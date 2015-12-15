@@ -86,8 +86,8 @@ module or1200_cpu_tmp_total(
 	// // SPR interface
 	// supv, spr_addr, spr_dat_cpu, spr_dat_pic, spr_dat_tt, spr_dat_pm,
 	// spr_dat_dmmu, spr_dat_immu, spr_dat_du, spr_cs, spr_we, mtspr_dc_done
-	 operand_a,operand_b,mult_mac_result,ex_macrc_op,alu_op,alu_op2,comp_op,cust5_op,cust5_limm,carry,flag,
-			   ex_pc,rf_dataw,wb_freeze//keccak_dataout
+	 operand_a,operand_b,mult_mac_result,ex_macrc_op,alu_op,alu_op2,comp_op,cust5_op,cust5_limm,carry,flag,rfwb_op,
+			   ex_pc,rf_dataw//keccak_dataout
 
 );
 parameter dw = `OR1200_OPERAND_WIDTH;
@@ -118,6 +118,8 @@ input 				rst;
    input [5:0] 			    cust5_limm;
    input 				    carry;
    input flag;
+   input	[`OR1200_RFWBOP_WIDTH-1:0]	rfwb_op;
+  
    //test output for testbench
 
 /// /
@@ -149,9 +151,9 @@ input 				rst;
 // output	[31:0]			ex_insn;
 // output				ex_freeze;
 // output	[31:0]			wb_insn;
- output				wb_freeze;
+// output				wb_freeze;
 // output	[31:0]			id_pc;
- output	[31:0]			ex_pc;
+  output	[31:0]			ex_pc;
 // output	[31:0]			wb_pc;
 // output                          ex_flushpipe;
 // output	[`OR1200_BRANCHOP_WIDTH-1:0]	branch_op;
@@ -249,10 +251,10 @@ input 				rst;
 // wire				if_freeze;
 // wire				id_freeze;
 // wire				ex_freeze;
-// wire				wb_freeze;
+ wire				wb_freeze;
 // wire	[`OR1200_SEL_WIDTH-1:0]	sel_a;
 // wire	[`OR1200_SEL_WIDTH-1:0]	sel_b;
- wire	[`OR1200_RFWBOP_WIDTH-1:0]	rfwb_op;
+// wire	[`OR1200_RFWBOP_WIDTH-1:0]	rfwb_op;
 // wire    [`OR1200_FPUOP_WIDTH-1:0]       fpu_op;
 // wire	[dw-1:0]		rf_dataw;
 // wire	[dw-1:0]		rf_dataa;

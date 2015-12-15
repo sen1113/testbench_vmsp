@@ -119,7 +119,7 @@ input 				rst;
    input 				    carry;
    input flag;
    input	[`OR1200_RFWBOP_WIDTH-1:0]	rfwb_op;
-  
+  input wb_freeze;
    //test output for testbench
 
 /// /
@@ -153,7 +153,7 @@ input 				rst;
 // output	[31:0]			wb_insn;
 // output				wb_freeze;
 // output	[31:0]			id_pc;
-// output	[31:0]			ex_pc;
+  output	[31:0]			ex_pc;
 // output	[31:0]			wb_pc;
 // output                          ex_flushpipe;
 // output	[`OR1200_BRANCHOP_WIDTH-1:0]	branch_op;
