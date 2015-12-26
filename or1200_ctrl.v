@@ -1015,7 +1015,7 @@ always @(posedge clk or `OR1200_RST_EVENT rst) begin
 		`OR1200_OR32_ALU:
 			rfwb_op <=  {`OR1200_RFWBOP_ALU, 1'b1};
 
-`ifdef OR1200_ALU_IMPL_CUST5
+`ifdef OR1200_IMPL_ALU_CUST5
 		// l.cust5 instructions
 		`OR1200_OR32_CUST5:
 			rfwb_op <=  {`OR1200_RFWBOP_KECCAK, 1'b1};

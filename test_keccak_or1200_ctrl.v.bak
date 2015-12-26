@@ -34,6 +34,11 @@ module test_keccak_or1200_ctrl;
    wire id_flushpipe;
    wire ex_flushpipe;
    wire wb_flushpipe;
+   wire	[31:0]			id_insn;
+   wire	[31:0]			ex_insn /* verilator public */;
+   wire	[`OR1200_BRANCHOP_WIDTH-1:0]		ex_branch_op;
+   wire	[`OR1200_BRANCHOP_WIDTH-1:0]		id_branch_op;
+
    wire	[31:0]				id_simm;
    wire [31:0] 				ex_simm;
    wire [`OR1200_REGFILE_ADDR_WIDTH-1:0] rf_addrw;//test this signal

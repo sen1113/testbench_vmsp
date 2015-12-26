@@ -38,7 +38,7 @@ module test_total;
 
     // Instantiate the Unit Under Test (UUT)
 or1200_cpu_tmp_total or1200_cpu_tmp_total(
-					  clk, rst, operand_a,operand_b,mult_mac_result,macrc_op,alu_op,alu_op2,comp_op,cust5_op,cust5_limm,carry,flag,rfwb_op,ex_pc,rf_dataw
+					  clk, rst, operand_a,operand_b,mult_mac_result,macrc_op,alu_op,alu_op2,comp_op,cust5_op,cust5_limm,carry,flag,rfwb_op,ex_pc,rf_dataw,wb_freeze
 					  );
 
    initial begin
@@ -102,6 +102,11 @@ or1200_cpu_tmp_total or1200_cpu_tmp_total(
       cust5_limm = 6'b00_1110;//select in512[479:447]
       #(`P);
       alu_op = 5'b1_0010; cust5_op = 5'b01000; #(`P);
+      
+      cust5_limm = 6'b00_1101;//select in512[446:414]
+      #(`P);
+      alu_op = 5'b1_0010; cust5_op = 5'b01000; #(`P);
+      
    end
    always #(`P/2) clk = ~ clk;
 

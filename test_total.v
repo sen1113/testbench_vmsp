@@ -93,7 +93,7 @@ or1200_cpu_tmp_total or1200_cpu_tmp_total(
       alu_op = 5'b1_0010; cust5_op = 5'b00010; operand_a = "dog."; #(`P);
       alu_op = 5'b1_0010; cust5_op = 5'b00001; operand_a = 0; #(`P);//TAIL
 
-
+#(`P*40);  
       //store mode
       cust5_limm = 6'b00_1111;//select in512[511:480]
       #(`P);
@@ -102,6 +102,11 @@ or1200_cpu_tmp_total or1200_cpu_tmp_total(
       cust5_limm = 6'b00_1110;//select in512[479:447]
       #(`P);
       alu_op = 5'b1_0010; cust5_op = 5'b01000; #(`P);
+      
+      cust5_limm = 6'b00_1101;//select in512[446:414]
+      #(`P);
+      alu_op = 5'b1_0010; cust5_op = 5'b01000; #(`P);
+      
    end
    always #(`P/2) clk = ~ clk;
 

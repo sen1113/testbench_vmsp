@@ -984,23 +984,23 @@ always @(posedge clk or `OR1200_RST_EVENT rst) begin
 		// l.addi
 		`OR1200_OR32_ADDI:
 			rfwb_op <=  {`OR1200_RFWBOP_ALU, 1'b1};
-		  
+
 		// l.addic
 		`OR1200_OR32_ADDIC:
 			rfwb_op <=  {`OR1200_RFWBOP_ALU, 1'b1};
-		  
+
 		// l.andi
 		`OR1200_OR32_ANDI:
 			rfwb_op <=  {`OR1200_RFWBOP_ALU, 1'b1};
-		  
+
 		// l.ori
 		`OR1200_OR32_ORI:
 			rfwb_op <=  {`OR1200_RFWBOP_ALU, 1'b1};
-		  
+
 		// l.xori
 		`OR1200_OR32_XORI:
 			rfwb_op <=  {`OR1200_RFWBOP_ALU, 1'b1};
-		  
+
 		// l.muli
 `ifdef OR1200_MULT_IMPLEMENTED
 		`OR1200_OR32_MULI:
@@ -1018,7 +1018,8 @@ always @(posedge clk or `OR1200_RST_EVENT rst) begin
 `ifdef OR1200_ALU_IMPL_CUST5
 		// l.cust5 instructions
 		`OR1200_OR32_CUST5:
-			rfwb_op <=  {`OR1200_RFWBOP_ALU, 1'b1};
+			rfwb_op <=  {`OR1200_RFWBOP_KECCAK, 1'b1};
+		  //modify for keccak
 `endif
 `ifdef OR1200_FPU_IMPLEMENTED
 		  // FPU instructions, lf.XXX.s, except sfxx
@@ -1026,7 +1027,7 @@ always @(posedge clk or `OR1200_RST_EVENT rst) begin
 		    rfwb_op <=  {`OR1200_RFWBOP_FPU,!id_insn[3]};
 `endif
 		// Instructions w/o register-file write-back
-		default: 
+		default:
 			rfwb_op <=  `OR1200_RFWBOP_NOP;
 
 
@@ -1141,7 +1142,7 @@ always @(id_insn) begin
 	endcase
 end
 
-s//
+//
 // Decode of comp_op
 //
 always @(posedge clk or `OR1200_RST_EVENT rst) begin
