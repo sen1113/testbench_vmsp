@@ -444,31 +444,31 @@ assign sig_range = sr[`OR1200_SR_OV];
 
 
 
-//
-// Instantiation of instruction fetch block
-//
-or1200_if or1200_if(
-	.clk(clk),
-	.rst(rst),
-	.icpu_dat_i(icpu_dat_i),
-	.icpu_ack_i(icpu_ack_i),
-	.icpu_err_i(icpu_err_i),
-	.icpu_adr_i(icpu_adr_i),
-	.icpu_tag_i(icpu_tag_i),
+// //
+// // Instantiation of instruction fetch block
+// //
+// or1200_if or1200_if(
+// 	.clk(clk),
+// 	.rst(rst),
+// 	.icpu_dat_i(icpu_dat_i),
+// 	.icpu_ack_i(icpu_ack_i),
+// 	.icpu_err_i(icpu_err_i),
+// 	.icpu_adr_i(icpu_adr_i),
+// 	.icpu_tag_i(icpu_tag_i),
 
-	.if_freeze(if_freeze),
-	.if_insn(if_insn),
-	.if_pc(if_pc),
-	.saving_if_insn(saving_if_insn),
-	.if_flushpipe(if_flushpipe),
-	.if_stall(if_stall),
-	.no_more_dslot(no_more_dslot),
-	.genpc_refetch(genpc_refetch),
-	.rfe(rfe),
-	.except_itlbmiss(except_itlbmiss),
-	.except_immufault(except_immufault),
-	.except_ibuserr(except_ibuserr)
-);
+// 	.if_freeze(if_freeze),
+// 	.if_insn(if_insn),
+// 	.if_pc(if_pc),
+// 	.saving_if_insn(saving_if_insn),
+// 	.if_flushpipe(if_flushpipe),
+// 	.if_stall(if_stall),
+// 	.no_more_dslot(no_more_dslot),
+// 	.genpc_refetch(genpc_refetch),
+// 	.rfe(rfe),
+// 	.except_itlbmiss(except_itlbmiss),
+// 	.except_immufault(except_immufault),
+// 	.except_ibuserr(except_ibuserr)
+// );
 
 //
 // Instantiation of instruction decode/control logic
