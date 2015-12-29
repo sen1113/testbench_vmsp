@@ -28,11 +28,10 @@ module test_all;
    reg [31:0] ex_pc;
    reg 	      wbforw_valid;
    reg 	      du_hwbkpt;
-
+reg [31:0] spr_cs;
    // Outputs
    wire [31:0] rf_dataw;//test this signal
-   wire [31:0]spr_cs;
-
+ 
    // Instantiate the Unit Under Test (UUT)
   or1200_cpu_keccak or1200_cpu_keccak(
   	// Clk & Rst 
@@ -52,7 +51,7 @@ module test_all;
    wbforw_valid,
    du_hwbkpt,
 //for test output
-rf_dataw,spr_cs,
+rf_dataw
 
   );
    initial begin
@@ -73,7 +72,7 @@ rf_dataw,spr_cs,
       ex_pc = 0;
       wbforw_valid = 0;
       du_hwbkpt = 0;
-
+spr_cs = 0;//test   
 
       // Wait 100 ns for global reset to finish
       #100;
@@ -104,7 +103,7 @@ rf_dataw,spr_cs,
       if_insn = 32'b 111100_00100_00100_00000_000000_00001;//end
 
       //l.cust5 (store)
-      //#(`P*50);
+      #(`P*50);
       #(`P);
       if_insn = 32'b 111100_00001_00000_00000_001111_01000;
       #(`P);

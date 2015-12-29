@@ -72,8 +72,10 @@ module or1200_cpu_keccak(
    ex_pc,
    wbforw_valid,
    du_hwbkpt,
+   
+   spr_cs,
 //for test output
-rf_dataw,spr_cs,
+rf_dataw
 
 
 	// // Insn interface
@@ -136,6 +138,8 @@ input 				rst;
    input [31:0] 		ex_pc;
    input 			wbforw_valid;
    input 			du_hwbkpt;
+  
+  input [31:0] spr_cs;
    //test output for testbench
 
 
@@ -234,7 +238,7 @@ input 				rst;
 // output	[dw-1:0]		spr_addr;
 // output	[dw-1:0]		spr_dat_cpu;
 // output	[dw-1:0]		spr_dat_npc;
- output	[31:0]			spr_cs; 
+// output	[31:0]			spr_cs; 
 // output				spr_we;
 // input   			mtspr_dc_done;
 
