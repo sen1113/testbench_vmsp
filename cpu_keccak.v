@@ -55,8 +55,8 @@
 // synopsys translate_on
 `include "or1200_defines.v"
 
-module or1200_cpu_keccak
-	// Clk & Rst
+module or1200_cpu_keccak( 
+	// Clk & Rst 
 	clk, rst,
 //for test input
    id_freeze,
@@ -73,7 +73,7 @@ module or1200_cpu_keccak
    wbforw_valid,
    du_hwbkpt,
 //for test output
-rf_daraw,spr_cs,
+rf_dataw,spr_cs,
 
 
 	// // Insn interface
@@ -247,23 +247,29 @@ input 				rst;
 //
 // Internal wires
 //
+wire [31:0]id_insn;
+wire [31:0]ex_insn;
+wire [`OR1200_BRANCHOP_WIDTH-1:0] id_branch_op;
+wire [`OR1200_BRANCHOP_WIDTH-1:0]	ex_branch_op;
+
+wire [dw-1:0] spr_addr;
 // wire	[31:0]			if_insn;
 // wire				saving_if_insn;
 // wire	[31:0]			if_pc;
-// wire	[aw-1:0]		rf_addrw;
-// wire	[aw-1:0] 		rf_addra;
-// wire	[aw-1:0] 		rf_addrb;
+ wire	[aw-1:0]		rf_addrw;
+ wire	[aw-1:0] 		rf_addra;
+ wire	[aw-1:0] 		rf_addrb;
 // wire				rf_rda;
 // wire				rf_rdb;
  wire	[dw-1:0]		id_simm;
-// wire	[dw-1:2]		id_branch_addrtarget;
-// wire	[dw-1:2]		ex_branch_addrtarget;
+ wire	[dw-1:2]		id_branch_addrtarget;
+ wire	[dw-1:2]		ex_branch_addrtarget;
  wire	[`OR1200_ALUOP_WIDTH-1:0]	alu_op;
  wire	[`OR1200_ALUOP2_WIDTH-1:0]	alu_op2;
-// wire	[`OR1200_COMPOP_WIDTH-1:0]	comp_op;
+ wire	[`OR1200_COMPOP_WIDTH-1:0]	comp_op;
 // wire	[`OR1200_BRANCHOP_WIDTH-1:0]	pre_branch_op;
 // wire	[`OR1200_BRANCHOP_WIDTH-1:0]	branc h_op;
-// wire	[`OR1200_LSUOP_WIDTH-1:0]	id_lsu_op;
+ wire	[`OR1200_LSUOP_WIDTH-1:0]	id_lsu_op;
 // wire				genpc_freeze;
 // wire				if_freeze;
 // wire				id_freeze;
@@ -271,8 +277,8 @@ input 				rst;
 // wire				wb_freeze;
  wire	[`OR1200_SEL_WIDTH-1:0]	sel_a;
  wire	[`OR1200_SEL_WIDTH-1:0]	sel_b;
-// wire	[`OR1200_RFWBOP_WIDTH-1:0]	rfwb_op;
-// wire    [`OR1200_FPUOP_WIDTH-1:0]       fpu_op;
+ wire	[`OR1200_RFWBOP_WIDTH-1:0]	rfwb_op;
+ wire    [`OR1200_FPUOP_WIDTH-1:0]       fpu_op;
  wire	[dw-1:0]		rf_dataw;
  wire	[dw-1:0]		rf_dataa;
  wire	[dw-1:0]		rf_datab;

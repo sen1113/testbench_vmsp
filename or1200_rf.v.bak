@@ -289,6 +289,13 @@ or1200_tpram_32x32 rf_b(
       .clk_b(clk),
       .ce_b(rf_we),
       .we_b(rf_we),
+      .addr_b(rf_addr),
+      .do_a(from_rfb),
+
+      // Port B
+      .clk_b(clk),
+      .ce_b(rf_we),
+      .we_b(rf_we),
       .addr_b(rf_addrw),
       .di_b(rf_dataw)
       );
