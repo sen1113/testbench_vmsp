@@ -272,7 +272,7 @@ or1200_tpram_32x32 rf_b(
 //
 // Instantiation of register file two-port RAM A
 //
-   or1200_dpram #
+      or1200_dpram #
      (
       .aw(5),
       .dw(32)
@@ -292,6 +292,31 @@ or1200_tpram_32x32 rf_b(
       .addr_b(rf_addrw),
       .di_b(rf_dataw)
       );
+
+   //
+   // Instantiation of register file two-port RAM B
+   //
+   or1200_dpram #
+     (
+      .aw(5),
+      .dw(32)
+      )
+   rf_b
+     (
+      // Port A
+      .clk_a(clk),
+      .ce_a(rf_enb),
+      .addr_a(addrb),
+      .do_a(from_rfb),
+
+      // Port B
+      .clk_b(clk),
+      .ce_b(rf_we),
+      .we_b(rf_we),
+      .addr_b(rf_addrw),
+      .di_b(rf_dataw)
+      );
+
 
 `else
 
