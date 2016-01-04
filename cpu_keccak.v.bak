@@ -73,7 +73,7 @@ module or1200_cpu_keccak(
    wbforw_valid,
    du_hwbkpt,
 //for test output
-rf_dataw,spr_cs,
+rf_dataw
 
 
 	// // Insn interface
@@ -136,6 +136,8 @@ input 				rst;
    input [31:0] 		ex_pc;
    input 			wbforw_valid;
    input 			du_hwbkpt;
+  
+  input [31:0] spr_cs;
    //test output for testbench
 
 
@@ -234,7 +236,7 @@ input 				rst;
 // output	[dw-1:0]		spr_addr;
 // output	[dw-1:0]		spr_dat_cpu;
 // output	[dw-1:0]		spr_dat_npc;
- output	[31:0]			spr_cs; 
+// output	[31:0]			spr_cs; 
 // output				spr_we;
 // input   			mtspr_dc_done;
 
@@ -252,6 +254,7 @@ wire [31:0]ex_insn;
 wire [`OR1200_BRANCHOP_WIDTH-1:0] id_branch_op;
 wire [`OR1200_BRANCHOP_WIDTH-1:0]	ex_branch_op;
 
+wire [dw-1:0] spr_addr;
 // wire	[31:0]			if_insn;
 // wire				saving_if_insn;
 // wire	[31:0]			if_pc;
