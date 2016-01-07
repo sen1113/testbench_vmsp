@@ -161,9 +161,9 @@ always @(muxin_a or muxin_b or muxin_c or muxin_d or muxin_e or muxin_keccak or 
 `ifdef OR1200_RFWBOP_KECCAK
 	  `OR1200_RFWBOP_KECCAK : begin
 	     muxout = muxin_keccak;
+	  end
 `endif
 
-	  end
 	  default : begin
 	     muxout = 0;
 	  end
