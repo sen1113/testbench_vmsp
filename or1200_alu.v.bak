@@ -528,9 +528,8 @@ always@(cust5_op or cust5_limm or a or b)begin
    casez(cust5_op)
      5'b00100://Start Keccak
        begin//patern 1 for keccak
-	  //start = 1;
-	  last = 0;
-	  cust5_en = 1;
+	       last = 0;
+	       cust5_en = 1;
        end
       5'b00010:
         begin//Keccak in progress
@@ -539,15 +538,15 @@ always@(cust5_op or cust5_limm or a or b)begin
         end
      5'b00001://Finish Keccak
        begin
-	  //start = 0;
-	  last = 1;
-	 // cust5_en = 0;
+      	  last = 1;
        end
      5'b01000://store mode
        begin
-	  num = cust5_limm[5:0];//to keccak_devide
-	  cust5_en = 0;
+	       num = cust5_limm[5:0];//to keccak_devide
+	       last = 0;
+	       cust5_en = 0;
        end
+      default:last=0;cust5_en=0;num=0;
    endcase
 
    //TODO:

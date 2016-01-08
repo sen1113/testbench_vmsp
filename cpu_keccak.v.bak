@@ -72,6 +72,8 @@ module or1200_cpu_keccak(
    ex_pc,
    wbforw_valid,
    du_hwbkpt,
+   
+   spr_cs,
 //for test output
 rf_dataw
 

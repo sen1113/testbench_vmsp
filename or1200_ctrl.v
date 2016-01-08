@@ -184,7 +184,10 @@ reg     [31:2]				ex_branch_addrtarget;
 `ifdef OR1200_DC_NOSTACKWRITETHROUGH
 reg 					dc_no_writethrough;
 `endif
-
+`ifdef OR1200_IMPL_ALU_CUST5
+reg[4:0] cust5_op;
+reg[5:0] cust5_limm;
+`endif
 //
 // Register file read addresses
 //
@@ -368,11 +371,6 @@ end
 assign ex_macrc_op = 1'b0;
 `endif
 
-//
-// cust5_op, cust5_limm (L immediate)
-//
-assign cust5_op = ex_insn[4:0];
-assign cust5_limm = ex_insn[10:5];
 
 //
 //
@@ -829,7 +827,11 @@ always @(posedge clk or `OR1200_RST_EVENT rst) begin
 `ifdef OR1200_IMPL_ALU_CUST5
 	    // l.cust5
 	    `OR1200_OR32_CUST5:
+	    begin
 	      alu_op <=  `OR1200_ALUOP_CUST5;
+        cust5_op <= id_insn[4:0];
+        cust5_limm <= id_insn[10:5];
+      end
 `endif	    
 	    // Default
 	    default: begin
@@ -1218,5 +1220,5 @@ end
    assign dc_no_writethrough = 0;
   
 `endif      
-   
+
 endmodule

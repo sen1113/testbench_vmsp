@@ -677,8 +677,6 @@ keccak keccak(
 	      );
    //Instantiation of keccak_ctrl
 keccak_ctrl keccak_ctrl(
-			.clk(clk),
-			.reset(rst),
 			.in512(hash512),//from keccak
 			.hash_num(hash_num),//from alu
 			.keccak_en(keccak_en),//from alu
