@@ -680,7 +680,7 @@ keccak_ctrl keccak_ctrl(
 			.in512(hash512),//from keccak
 			.hash_num(hash_num),//from alu
 			.keccak_en(keccak_en),//from alu
-			.devide_en(out_ready),//from keccak
+			.out_ready(out_ready),//from keccak
 			.byte_num(byte_num),//to keccak
 			.hash_out32(keccak_dataout),//to wbmux
 			.in_ready(in_ready)//to kecak
