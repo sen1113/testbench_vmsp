@@ -636,7 +636,7 @@ or1200_alu or1200_alu(
 	.carry(carry),
 		      .keccak_en(keccak_en),
 		      .out32(keccak_data32),
-		      .is_last(is_last),
+		      .last(is_last),
 		      .hash_num(hash_num),
 		      .store_en(store_en)
 );
@@ -655,8 +655,8 @@ or1200_wbmux or1200_wbmux(
 	.muxin_b(lsu_dataout),
 	.muxin_c(sprs_dataout),
 	.muxin_d(ex_pc),
-        .muxin_e(fpu_dataout),
-        .muxin_keccak(keccak_dataout),
+  .muxin_e(fpu_dataout),
+  .muxin_keccak(keccak_dataout),
 	.muxout(rf_dataw),
 	.muxreg(wb_forw),
 	.muxreg_valid(wbforw_valid)
