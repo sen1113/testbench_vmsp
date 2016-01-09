@@ -111,7 +111,7 @@ input	[31:0]			spr_addr;
 input	[31:0]			spr_dat_i;
 output	[31:0]			spr_dat_o;
 input    			du_read;
-   
+
 //
 // Internal wires and regs
 //
@@ -133,7 +133,7 @@ reg				rf_we_allow;
    // and re-read it whenever the SPR select goes low, so we must remember
    // the last address and generate a signal for falling edge of SPR cs.
    // -- Julius
-   
+
    // Detect falling edge of SPR select 
    reg 				spr_du_cs;
    wire 			spr_cs_fe;
@@ -150,7 +150,7 @@ reg				rf_we_allow;
 
    assign spr_cs_fe = spr_du_cs & !(spr_cs & du_read);
 
-   
+
 //
 // SPR access is valid when spr_cs is asserted and
 // SPR address matches GPR addresses

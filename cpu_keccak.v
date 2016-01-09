@@ -656,10 +656,10 @@ or1200_wbmux or1200_wbmux(
 	.muxin_c(sprs_dataout),
 	.muxin_d(ex_pc),
         .muxin_e(fpu_dataout),
-        .muxin_keccak(keccak_dataout)
+        .muxin_keccak(keccak_dataout),
 	.muxout(rf_dataw),
 	.muxreg(wb_forw),
-	.muxreg_valid(wbforw_valid),
+	.muxreg_valid(wbforw_valid)
 );
 
 
