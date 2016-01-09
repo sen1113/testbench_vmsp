@@ -392,7 +392,8 @@ wire				abort_ex;
    wire 			out_ready;
    wire [31:0] 			keccak_dataout;
    wire 			store_en;
-   
+   wire 			keccak_reset;
+
 //
 // Send exceptions to Debug Unit
 //
@@ -635,6 +636,7 @@ or1200_alu or1200_alu(
 	.flag(flag),
 	.carry(carry),
 		      .keccak_en(keccak_en),
+		      .keccak_reset(keccak_reset),
 		      .out32(keccak_data32),
 		      .last(is_last),
 		      .hash_num(hash_num),
@@ -666,7 +668,7 @@ or1200_wbmux or1200_wbmux(
    //Instantiation of Keccak
 keccak keccak(
 	      .clk(clk),
-	      .reset(rst),
+	      .reset(keccak_reset),
 	      .in(keccak_data32),//from alu out32
 	      .in_ready(in_ready),//from keccak_ctrl in_ready
 	      .is_last(is_last),//from alu is_last
