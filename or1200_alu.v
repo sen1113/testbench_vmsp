@@ -58,7 +58,7 @@ module or1200_alu(
 	result, flagforw, flag_we,
 	ovforw, ov_we,
 	cyforw, cy_we, carry, flag,
-		  keccak_en,out32,is_last,hash_num
+		  keccak_en,out32,last,hash_num,store_en
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
@@ -83,13 +83,12 @@ output				cy_we;
 output				ovforw;
 output				ov_we;
 input				carry;
-   input 			flag;
-   output     keccak_en;
-   output[31:0]     out32;
-   //output     in_ready;
-   output     is_last;
-   output[5:0]     hash_num;
-
+input   			flag;
+   output 			keccak_en;
+   output [width-1:0] 		out32;
+   output 			last;
+   output [5:0] 		hash_num;
+   output 			store_en;
 //
 // Internal wires and regs
 //
@@ -97,11 +96,10 @@ reg	[width-1:0]		result;
 reg	[width-1:0]		shifted_rotated;
 reg	[width-1:0]		extended;
 `ifdef OR1200_IMPL_ALU_CUST5
-   reg [width-1:0] 		result_cust5;
-   reg 				cust5_en;
-//   reg 				start;
+   reg 				keccak_en;
    reg 				last;
-   reg [5:0] 			num;
+   reg [5:0] 			hash_num;
+   reg 				store_en;
 `endif
 reg				flagforw;
 reg				flagcomp;
@@ -124,9 +122,7 @@ wire    			ov_sum;
 wire    [width-1:0] 		carry_in;
 
 wire    [width-1:0]		b_mux;
-`ifdef OR1200_IMPL_ALU_CUST5
 
-`endif
 
 
 //
@@ -192,13 +188,11 @@ assign result_and = a & b;
 
 
 // connect keccak_en & cust5_en
-//`ifdef OR1200_IMPL_ALU_cust5
-   assign keccak_en = cust5_en;
-   assign out32 = a; //a 32bit
-  // assign in_ready = start;
-   assign is_last = last;
-   assign hash_num = num;//num = cust5_limm
-//`endif
+
+//   assign keccak_en = cust5_en;
+   assign out32 = a;//to keccak -in
+//   assign is_last = last;
+  // assign hash_num = num;//num = cust5_limm
 
 
 //
@@ -220,9 +214,6 @@ always @(alu_op or alu_op2 or a or b or result_sum or result_and or macrc_op
 	 or shifted_rotated or mult_mac_result or flag or carry
 `ifdef OR1200_IMPL_ALU_EXT
          or extended
-`endif
-`ifdef OR1200_IMPL_ALU_CUST5
-	 or result_cust5
 `endif
 ) begin
 `ifdef OR1200_CASE_DEFAULT
@@ -249,7 +240,7 @@ always @(alu_op or alu_op2 or a or b or result_sum or result_and or macrc_op
 `ifdef OR1200_IMPL_ALU_CUST5
 
 		`OR1200_ALUOP_CUST5 : begin
-				result = result_cust5;
+				//result = result_cust5;
 		end
 `endif
 		`OR1200_ALUOP_SHROT : begin
@@ -506,59 +497,44 @@ end
 // l.cust5 custom instructions
 //
 `ifdef OR1200_IMPL_ALU_CUST5
-// Examples for move byte, set bit and clear bit
-//
-//always @(cust5_op or cust5_limm or a or b) begin
-// 	casez (cust5_op)		// synopsys parallel_case
-// 		5'h1 : begin
-// 			casez (cust5_limm[1:0])
-// 			  2'h0: result_cust5 = {a[31:8], b[7:0]};
-// 			  2'h1: result_cust5 = {a[31:16], b[7:0], a[7:0]};
-// 			  2'h2: result_cust5 = {a[31:24], b[7:0], a[15:0]};
-// 			  2'h3: result_cust5 = {b[7:0], a[23:0]};
-// 			endcase
-// 		end
-// 		5'h2 :
-// 			result_cust5 = a | (1 << cust5_limm);
-// 		5'h3 :
-// 			result_cust5 = a & (32'hffffffff ^ (1 << cust5_limm));
-////
-// *** Put here new l.cust5 custom instructions ***
-always@(cust5_op or cust5_limm or a or b)begin
+always@(cust5_op or cust5_limm)begin
    casez(cust5_op)
      5'b00100://Start Keccak
        begin//patern 1 for keccak
-	       last = 0;
-	       cust5_en = 1;
+	  hash_num = 0;
+	  last = 0;
+	  keccak_en = 1;
+	  store_en = 0;
        end
-      5'b00010:
-        begin//Keccak in progress
-      	  last = 0;
-      	  cust5_en = 1;
-        end
+     5'b00010:
+       begin//Keccak in progress
+      	  hash_num = 0;
+	  last = 0;
+      	  keccak_en = 1;
+	  store_en = 0;
+       end
      5'b00001://Finish Keccak
        begin
-      	  last = 1;
+	  hash_num = 0;
+	  last = 1;
+	  keccak_en = 1;
+	  store_en = 0;
        end
      5'b01000://store mode
        begin
-	       num = cust5_limm[5:0];//to keccak_devide
-	       last = 0;
-	       cust5_en = 0;
+	  hash_num = cust5_limm[5:0];//to keccak_devide
+	  last = 0;
+	  keccak_en = 0;
+	  store_en = 1;
        end
-      default:
-        begin
-          last = 0;
-          cust5_en = 0;
-          num = 0;
-        end
+     default:
+       begin
+	  last = 0;
+	  keccak_en = 0;
+	  hash_num = 0;
+	  store_en = 0;
+       end
    endcase
-
-   //TODO:
-   //result_cust5=hash value;//
-
-
-     //
 end // always @ (cust5_op or cust5_limm or a or b)
 `endif
 

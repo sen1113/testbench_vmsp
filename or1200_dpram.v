@@ -124,10 +124,7 @@ module or1200_dpram
    //assign do_a = (oe_a) ? mem[addr_a_reg] : {dw{1'b0}};
    assign do_a = mem[addr_a_reg];
    
-   //test
    
-   always@(posedge ce_a)
-   mem[0] <= 0;
    //
    // RAM read
    //

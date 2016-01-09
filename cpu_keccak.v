@@ -1,5 +1,3 @@
-//This module is not completed
-
 
 //////////////////////////////////////////////////////////////////////
 ////                                                              ////
@@ -393,7 +391,8 @@ wire				abort_ex;
    wire [511:0] 		hash512;
    wire 			out_ready;
    wire [31:0] 			keccak_dataout;
-
+   wire 			store_en;
+   
 //
 // Send exceptions to Debug Unit
 //
@@ -638,7 +637,8 @@ or1200_alu or1200_alu(
 		      .keccak_en(keccak_en),
 		      .out32(keccak_data32),
 		      .is_last(is_last),
-		      .hash_num(hash_num)
+		      .hash_num(hash_num),
+		      .store_en(store_en)
 );
 
 
@@ -656,10 +656,10 @@ or1200_wbmux or1200_wbmux(
 	.muxin_c(sprs_dataout),
 	.muxin_d(ex_pc),
         .muxin_e(fpu_dataout),
+        .muxin_keccak(keccak_dataout)
 	.muxout(rf_dataw),
 	.muxreg(wb_forw),
 	.muxreg_valid(wbforw_valid),
-			  .muxin_keccak(keccak_dataout)
 );
 
 
@@ -680,6 +680,7 @@ keccak_ctrl keccak_ctrl(
 			.in512(hash512),//from keccak
 			.hash_num(hash_num),//from alu
 			.keccak_en(keccak_en),//from alu
+			.store_en(store_en),//from alu
 			.out_ready(out_ready),//from keccak
 			.byte_num(byte_num),//to keccak
 			.hash_out32(keccak_dataout),//to wbmux

@@ -57,9 +57,8 @@ module or1200_wbmux(
 
 	// Internal i/f
 	wb_freeze, rfwb_op,
-	muxin_a, muxin_b, muxin_c, muxin_d, muxin_e,
-	muxout, muxreg, muxreg_valid,
-		    muxin_keccak
+	muxin_a, muxin_b, muxin_c, muxin_d, muxin_e,muxin_keccak,
+	muxout, muxreg, muxreg_valid
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
