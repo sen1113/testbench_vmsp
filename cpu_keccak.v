@@ -640,7 +640,8 @@ or1200_alu or1200_alu(
 		      .out32(keccak_data32),
 		      .last(is_last),
 		      .hash_num(hash_num),
-		      .store_en(store_en)
+		      .store_en(store_en),
+		      .rst(rst)
 );
 
 

@@ -58,7 +58,7 @@ module or1200_alu(
 	result, flagforw, flag_we,
 	ovforw, ov_we,
 	cyforw, cy_we, carry, flag,
-		  keccak_en,keccak_reset,out32,last,hash_num,store_en
+		  keccak_en,keccak_reset,out32,last,hash_num,store_en,rst
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
@@ -84,6 +84,7 @@ output				ovforw;
 output				ov_we;
 input				carry;
 input   			flag;
+   input 			rst;
    output 			keccak_en;
    output 			keccak_reset;
    output [width-1:0] 		out32;
@@ -98,7 +99,7 @@ reg	[width-1:0]		shifted_rotated;
 reg	[width-1:0]		extended;
 `ifdef OR1200_IMPL_ALU_CUST5
    reg 				keccak_en;
-   reg 				keccak_reset;
+   reg 				keccak_reset_reg;
    reg 				last;
    reg [5:0] 			hash_num;
    reg 				store_en;
@@ -193,6 +194,7 @@ assign result_and = a & b;
 
 //   assign keccak_en = cust5_en;
    assign out32 = a;//to keccak -in
+   assign keccak_reset = rst | keccak_reset_reg;
 //   assign is_last = last;
   // assign hash_num = num;//num = cust5_limm
 
@@ -507,7 +509,7 @@ always@(cust5_op or cust5_limm)begin
 	  keccak_en = 0;
 	  hash_num = 0;
 	  store_en = 0;
-	  keccak_reset = 1;
+	  keccak_reset_reg = 1;
        end
      5'b00100://Start Keccak
        begin//patern 1 for keccak
@@ -515,7 +517,7 @@ always@(cust5_op or cust5_limm)begin
 	  last = 0;
 	  keccak_en = 1;
 	  store_en = 0;
-	  keccak_reset = 0;
+	  keccak_reset_reg = 0;
        end
      5'b00010:
        begin//Keccak in progress
@@ -523,7 +525,7 @@ always@(cust5_op or cust5_limm)begin
 	  last = 0;
       	  keccak_en = 1;
 	  store_en = 0;
-	  keccak_reset = 0;
+	  keccak_reset_reg = 0;
        end
      5'b00001://Finish Keccak
        begin
@@ -531,7 +533,7 @@ always@(cust5_op or cust5_limm)begin
 	  last = 1;
 	  keccak_en = 1;
 	  store_en = 0;
-	  keccak_reset = 0;
+	  keccak_reset_reg = 0;
        end
      5'b01000://store mode
        begin
@@ -539,7 +541,7 @@ always@(cust5_op or cust5_limm)begin
 	  last = 0;
 	  keccak_en = 0;
 	  store_en = 1;
-	  keccak_reset = 0;
+	  keccak_reset_reg = 0;
        end
      default:
        begin
@@ -547,7 +549,7 @@ always@(cust5_op or cust5_limm)begin
 	  keccak_en = 0;
 	  hash_num = 0;
 	  store_en = 0;
-	  keccak_reset = 0;
+	  keccak_reset_reg = 0;
        end
    endcase
 end // always @ (cust5_op or cust5_limm or a or b)
