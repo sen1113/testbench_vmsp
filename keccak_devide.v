@@ -25,6 +25,7 @@ module keccak_devide(in512, devided32, num, en);
 	   4'b1101:out <= in512[447:416];
 	   4'b1110:out <= in512[479:448];
 	   4'b1111:out <= in512[511:480];
+	   default:out <= 0;
 	 endcase
       end//if
    end//always

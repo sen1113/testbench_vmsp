@@ -103,6 +103,7 @@ reg	[width-1:0]		extended;
    reg 				last;
    reg [5:0] 			hash_num;
    reg 				store_en;
+   reg [31:0] 			cust5_input;
 `endif
 reg				flagforw;
 reg				flagcomp;
@@ -193,7 +194,7 @@ assign result_and = a & b;
 // connect keccak_en & cust5_en
 
 //   assign keccak_en = cust5_en;
-   assign out32 = a;//to keccak -in
+   assign out32 = cust5_input;//to keccak -in
    assign keccak_reset = rst | keccak_reset_reg;
 //   assign is_last = last;
   // assign hash_num = num;//num = cust5_limm
@@ -510,6 +511,7 @@ always@(cust5_op or cust5_limm)begin
 	  hash_num = 0;
 	  store_en = 0;
 	  keccak_reset_reg = 1;
+	  cust5_input = 0;
        end
      5'b00100://Start Keccak
        begin//patern 1 for keccak
@@ -518,6 +520,7 @@ always@(cust5_op or cust5_limm)begin
 	  keccak_en = 1;
 	  store_en = 0;
 	  keccak_reset_reg = 0;
+	  cust5_input = a;
        end
      5'b00010:
        begin//Keccak in progress
@@ -526,6 +529,7 @@ always@(cust5_op or cust5_limm)begin
       	  keccak_en = 1;
 	  store_en = 0;
 	  keccak_reset_reg = 0;
+	  cust5_input = a;
        end
      5'b00001://Finish Keccak
        begin
@@ -534,6 +538,7 @@ always@(cust5_op or cust5_limm)begin
 	  keccak_en = 1;
 	  store_en = 0;
 	  keccak_reset_reg = 0;
+	  cust5_input = a;
        end
      5'b01000://store mode
        begin
@@ -550,6 +555,7 @@ always@(cust5_op or cust5_limm)begin
 	  hash_num = 0;
 	  store_en = 0;
 	  keccak_reset_reg = 0;
+	  cust5_input = 0;
        end
    endcase
 end // always @ (cust5_op or cust5_limm or a or b)
