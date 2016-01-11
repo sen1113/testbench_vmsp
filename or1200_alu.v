@@ -502,7 +502,7 @@ end
 // l.cust5 custom instructions
 //
 `ifdef OR1200_IMPL_ALU_CUST5
-always@(cust5_op or cust5_limm)begin
+always@(cust5_op or cust5_limm or a)begin
    casez(cust5_op)
      5'b00000://reset Keccak
        begin
