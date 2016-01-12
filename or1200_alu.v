@@ -58,7 +58,7 @@ module or1200_alu(
 	result, flagforw, flag_we,
 	ovforw, ov_we,
 	cyforw, cy_we, carry, flag,
-		  rst,keccak_en,keccak_reset,out32,last,hash_num,store_en,cust5
+		  keccak_en,keccak_reset,out32,last,hash_num,store_en,rst,oncust5
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
@@ -91,7 +91,7 @@ input   			flag;
    output 			last;
    output [5:0] 		hash_num;
    output 			store_en;
-   output cust5;
+   output 			oncust5;
 //
 // Internal wires and regs
 //
@@ -193,13 +193,9 @@ assign result_and = a & b;
 
 
 // connect keccak_en & cust5_en
-
-//   assign keccak_en = cust5_en;
    assign out32 = cust5_input;//to keccak -in
    assign keccak_reset = rst | keccak_reset_reg;
-   assign cust5 = (alu_op == `OR1200_ALUOP_CUST5);
-//   assign is_last = last;
-  // assign hash_num = num;//num = cust5_limm
+   assign oncust5 = (alu_op == `OR1200_ALUOP_CUST5);
 
 
 //
@@ -248,7 +244,6 @@ always @(alu_op or alu_op2 or a or b or result_sum or result_and or macrc_op
 
 		`OR1200_ALUOP_CUST5 : begin
 				//result = result_cust5;
-	
 		end
 `endif
 		`OR1200_ALUOP_SHROT : begin
@@ -505,16 +500,17 @@ end
 // l.cust5 custom instructions
 //
 `ifdef OR1200_IMPL_ALU_CUST5
-always@(alu_op or cust5_op or cust5_limm or a)begin 
+always@(cust5_op or cust5_limm or a)begin
    casez(cust5_op)
      5'b00000://reset Keccak
        begin
-	  last = 0;
-	  keccak_en = 0;
-	  hash_num = 0;
-	  store_en = 0;
-	  keccak_reset_reg = 1;
+	  byte_num = 0;
 	  cust5_input = 0;
+	  hash_num = 0;
+	  keccak_en = 0;
+	  keccak_reset_reg = 1;
+	  last = 0;
+	  store_en = 0;
        end
      5'b00100://Start Keccak
        begin//patern 1 for keccak
@@ -527,41 +523,43 @@ always@(alu_op or cust5_op or cust5_limm or a)begin
        end
      5'b00010:
        begin//Keccak in progress
-      	  hash_num = 0;
-	  last = 0;
-      	  keccak_en = 1;
-	  store_en = 0;
-	  keccak_reset_reg = 0;
 	  cust5_input = a;
+      	  hash_num = 0;
+      	  keccak_en = 1;
+	  keccak_reset_reg = 0;
+	  last = 0;
+	  store_en = 0;
        end
      5'b00001://Finish Keccak
        begin
-	  hash_num = 0;
-	  last = 1;
-	  keccak_en = 1;
-	  store_en = 0;
-	  keccak_reset_reg = 0;
+	  byte_num = cust5_limm[5:0];
 	  cust5_input = a;
+	  hash_num = 0;
+	  keccak_en = 1;
+	  keccak_reset_reg = 0;
+	  last = 1;
+	  store_en = 0;
        end
      5'b01000://store mode
        begin
 	  hash_num = cust5_limm[5:0];//to keccak_devide
-	  last = 0;
 	  keccak_en = 0;
-	  store_en = 1;
 	  keccak_reset_reg = 0;
+	  last = 0;
+	  store_en = 1;
+
        end
      default:
        begin
-	  last = 0;
-	  keccak_en = 0;
-	  hash_num = 0;
-	  store_en = 0;
-	  keccak_reset_reg = 0;
+	  byte_num = 0;
 	  cust5_input = 0;
+	  hash_num = 0;
+	  keccak_en = 0;
+	  keccak_reset_reg = 0;
+	  last = 0;
+	  store_en = 0;
        end
    endcase
-       
 end // always @ (cust5_op or cust5_limm or a or b)
 `endif
 
