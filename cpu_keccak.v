@@ -393,6 +393,8 @@ wire				abort_ex;
    wire [31:0] 			keccak_dataout;
    wire 			store_en;
    wire 			keccak_reset;
+   wire 			oncust5;
+
 
 //
 // Send exceptions to Debug Unit
@@ -642,7 +644,8 @@ or1200_alu or1200_alu(
 		      .hash_num(hash_num),
 		      .store_en(store_en),
 		      .rst(rst),
-		      .cust5(cust5)	
+		      .byte_num(byte_num),
+		      .oncust5(oncust5)
 );
 
 
@@ -674,7 +677,7 @@ keccak keccak(
 	      .in(keccak_data32),//from alu out32
 	      .in_ready(in_ready),//from keccak_ctrl in_ready
 	      .is_last(is_last),//from alu is_last
-	      .byte_num(byte_num),//from keccak_ctrl byte_num
+	      .byte_num(byte_num),//from alu byte_num
 	      .buffer_full(buffer_full), /* to "user" module */
 	      .out(hash512),// to keccak_devide in512
 	      .out_ready(out_ready)// to keccak_devide en
@@ -686,10 +689,9 @@ keccak_ctrl keccak_ctrl(
 			.keccak_en(keccak_en),//from alu
 			.store_en(store_en),//from alu
 			.out_ready(out_ready),//from keccak
-			.byte_num(byte_num),//to keccak
 			.hash_out32(keccak_dataout),//to wbmux
 			.in_ready(in_ready),//to kecak
-			.cust5(cust5)
+			.oncust5(oncust5)
 			);
 
 endmodule
