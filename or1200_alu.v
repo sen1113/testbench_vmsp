@@ -58,7 +58,7 @@ module or1200_alu(
 	result, flagforw, flag_we,
 	ovforw, ov_we,
 	cyforw, cy_we, carry, flag,
-		  keccak_en,keccak_reset,out32,last,hash_num,store_en,rst
+		  rst,keccak_en,keccak_reset,out32,last,hash_num,store_en,cust5
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
@@ -91,6 +91,7 @@ input   			flag;
    output 			last;
    output [5:0] 		hash_num;
    output 			store_en;
+   output cust5;
 //
 // Internal wires and regs
 //
@@ -196,6 +197,7 @@ assign result_and = a & b;
 //   assign keccak_en = cust5_en;
    assign out32 = cust5_input;//to keccak -in
    assign keccak_reset = rst | keccak_reset_reg;
+   assign cust5 = (alu_op == `OR1200_ALUOP_CUST5);
 //   assign is_last = last;
   // assign hash_num = num;//num = cust5_limm
 
@@ -246,6 +248,7 @@ always @(alu_op or alu_op2 or a or b or result_sum or result_and or macrc_op
 
 		`OR1200_ALUOP_CUST5 : begin
 				//result = result_cust5;
+	
 		end
 `endif
 		`OR1200_ALUOP_SHROT : begin
@@ -502,7 +505,7 @@ end
 // l.cust5 custom instructions
 //
 `ifdef OR1200_IMPL_ALU_CUST5
-always@(cust5_op or cust5_limm or a)begin
+always@(alu_op or cust5_op or cust5_limm or a)begin 
    casez(cust5_op)
      5'b00000://reset Keccak
        begin
@@ -558,6 +561,7 @@ always@(cust5_op or cust5_limm or a)begin
 	  cust5_input = 0;
        end
    endcase
+       
 end // always @ (cust5_op or cust5_limm or a or b)
 `endif
 

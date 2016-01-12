@@ -641,7 +641,8 @@ or1200_alu or1200_alu(
 		      .last(is_last),
 		      .hash_num(hash_num),
 		      .store_en(store_en),
-		      .rst(rst)
+		      .rst(rst),
+		      .cust5(cust5)	
 );
 
 
@@ -668,7 +669,7 @@ or1200_wbmux or1200_wbmux(
 
    //Instantiation of Keccak
 keccak keccak(
-	      .clk(clk),
+	      .clk(clk),//from keccak_ctrl
 	      .reset(keccak_reset),
 	      .in(keccak_data32),//from alu out32
 	      .in_ready(in_ready),//from keccak_ctrl in_ready
@@ -687,7 +688,8 @@ keccak_ctrl keccak_ctrl(
 			.out_ready(out_ready),//from keccak
 			.byte_num(byte_num),//to keccak
 			.hash_out32(keccak_dataout),//to wbmux
-			.in_ready(in_ready)//to kecak
+			.in_ready(in_ready),//to kecak
+			.cust5(cust5)
 			);
 
 endmodule

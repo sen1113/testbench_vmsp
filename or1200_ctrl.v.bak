@@ -832,7 +832,7 @@ always @(posedge clk or `OR1200_RST_EVENT rst) begin
 	      begin
 		 alu_op <=  `OR1200_ALUOP_CUST5;
 		 cust5_op <= id_insn[4:0];
-		 cust5_limm <= id_insn[5:0];
+		 cust5_limm <= id_insn[10:5];
 	      end
 `endif
 	    // Default
