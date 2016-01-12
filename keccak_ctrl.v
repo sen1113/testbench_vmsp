@@ -7,7 +7,7 @@
 // synopsys translate_on
 //`include "or1200_defines.v"
 
-  module keccak_ctrl(in512,hash_num,keccak_en,store_en,out_ready,byte_num,in_ready,hash_out32,oncust5);
+  module keccak_ctrl(in512,hash_num,keccak_en,store_en,out_ready,in_ready,hash_out32,oncust5);
    input [511:0] in512;
    input [5:0] 	 hash_num;//from alu (=cust5_limm[5:0])
    input 	 keccak_en;//from alu
@@ -15,12 +15,9 @@
    input 	 store_en;//from alu
    input 	 oncust5;//from alu
 
-   output [1:0]  byte_num;//to keccak
    output 	 in_ready;//to keccak
    output [31:0] hash_out32;//to wbmux
 
-
-   assign byte_num = 2'b00; //Fix byte_num = 0 temporarily,because input is 32bit
    assign in_ready = keccak_en && (!out_ready) && oncust5;
    assign devide_en = out_ready && store_en;
 
