@@ -543,6 +543,8 @@ or1200_ctrl or1200_ctrl(
 	.id_lsu_op(id_lsu_op),
 	.cust5_op(cust5_op),
 	.cust5_limm(cust5_limm),
+			      .on_cust5(on_cust5),
+	
 	.id_pc(id_pc),
 	.ex_pc(ex_pc),
 	.multicycle(multicycle),
@@ -644,8 +646,7 @@ or1200_alu or1200_alu(
 		      .hash_num(hash_num),
 		      .store_en(store_en),
 		      .rst(rst),
-		      .byte_num(byte_num),
-		      .oncust5(oncust5)
+		      .byte_num(byte_num)
 );
 
 
@@ -691,7 +692,7 @@ keccak_ctrl keccak_ctrl(
 			.out_ready(out_ready),//from keccak
 			.hash_out32(keccak_dataout),//to wbmux
 			.in_ready(in_ready),//to kecak
-			.oncust5(oncust5)
+			.on_cust5(on_cust5)
 			);
 
 endmodule

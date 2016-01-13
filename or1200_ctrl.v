@@ -61,6 +61,9 @@ module or1200_ctrl
    // Clock and reset
    clk, rst,
    
+   //to keccak
+   on_cust5,
+   
    // Internal i/f
    except_flushpipe, extend_flush, if_flushpipe, id_flushpipe, ex_flushpipe, 
    wb_flushpipe,
@@ -120,6 +123,7 @@ output	[`OR1200_MULTICYCLE_WIDTH-1:0]		multicycle;
 output  [`OR1200_WAIT_ON_WIDTH-1:0] 		wait_on;
 output	[4:0]				cust5_op;
 output	[5:0]				cust5_limm;
+output on_cust5;
 input   [31:0]                          id_pc;
 input   [31:0]                          ex_pc;
 output	[31:0]				id_simm;
@@ -191,7 +195,10 @@ reg 					dc_no_writethrough;
 `ifdef OR1200_IMPL_ALU_CUST5
    reg [4:0] 				cust5_op;
    reg [5:0] 				cust5_limm;
+assign on_cust5 = (ex_insn[31:26]==`OR1200_OR32_CUST5);
 `endif
+
+
 //
 // Register file read addresses
 //

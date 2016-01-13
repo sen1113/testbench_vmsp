@@ -58,7 +58,7 @@ module or1200_alu(
 	result, flagforw, flag_we,
 	ovforw, ov_we,
 	cyforw, cy_we, carry, flag,
-		  keccak_en,keccak_reset,out32,last,hash_num,store_en,rst,oncust5,byte_num
+		  keccak_en,keccak_reset,out32,last,hash_num,store_en,rst,byte_num
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
@@ -91,7 +91,6 @@ input   			flag;
    output 			last;
    output [5:0] 		hash_num;
    output 			store_en;
-   output 			oncust5;
    output[1:0] 			byte_num;
 //
 // Internal wires and regs
@@ -196,7 +195,6 @@ assign result_and = a & b;
 // connect keccak_en & cust5_en
    assign out32 = cust5_input;//to keccak -in
    assign keccak_reset = rst | keccak_reset_reg;
-   assign oncust5 = (alu_op == `OR1200_ALUOP_CUST5);
    assign byte_num = (cust5_op == 5'b00001) ? cust5_limm[1:0] : 2'b00;
 
 //
