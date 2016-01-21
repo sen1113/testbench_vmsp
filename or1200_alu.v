@@ -58,7 +58,7 @@ module or1200_alu(
 	result, flagforw, flag_we,
 	ovforw, ov_we,
 	cyforw, cy_we, carry, flag,
-		  keccak_en,keccak_reset,out32,last,hash_num,store_en,rst,byte_num
+		  keccak_en,keccak_reset,out32,last,hash_num,store_en,rst,byte_num,sign_num
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
@@ -92,6 +92,8 @@ input   			flag;
    output [5:0] 		hash_num;
    output 			store_en;
    output[1:0] 			byte_num;
+
+output [5:0] sign_num;
 //
 // Internal wires and regs
 //
@@ -546,6 +548,10 @@ always@(cust5_op or cust5_limm or a)begin
 	  store_en = 1;
 
        end
+       5'b10000://sign storemode
+       begin
+         sign_num = cust5_limm[5:0];//to sign_devide
+         
      default:
        begin
 	  cust5_input = 0;
