@@ -4,7 +4,7 @@
 
  */
 
-`timescale 1ns / 1ps
+//`timescale 1ns / 1ps
 `define P 20
 `include "or1200_defines.v"
 
@@ -316,7 +316,7 @@ module test_all;
       if_insn = 32'b 111100_00001_00000_00000_000000_01000;
 
 //sign_store
-      #(6000*`P);
+      #(50000*`P);
       if_insn = 32'b 111100_00001_00000_00000_000000_10000;
       #(`P);
       if_insn = 32'b 111100_00001_00000_00000_000001_10000;
@@ -348,6 +348,7 @@ module test_all;
       if_insn = 32'b 111100_00001_00000_00000_001110_10000;
       #(`P);
       if_insn = 32'b 111100_00001_00000_00000_001111_10000;
+ #(`P); $stop;
    end
 
    //   initial $monitor($time, " num = %h out32 = %h",num,out32);

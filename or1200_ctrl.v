@@ -1029,7 +1029,10 @@ always @(posedge clk or `OR1200_RST_EVENT rst) begin
 `ifdef OR1200_IMPL_ALU_CUST5
 		// l.cust5 instructions
 		`OR1200_OR32_CUST5:
+		if(id_insn[4:0]==5'b01000)
 			rfwb_op <=  {`OR1200_RFWBOP_KECCAK, 1'b1};
+  else if(id_insn[4:0]==5'b10000)   
+      rfwb_op <=  {`OR1200_RFWBOP_SIGN, 1'b1};
 		  //modify for keccak
 `endif
 

@@ -195,7 +195,7 @@ reg 					dc_no_writethrough;
 `ifdef OR1200_IMPL_ALU_CUST5
    reg [4:0] 				cust5_op;
    reg [5:0] 				cust5_limm;
-assign on_cust5 = (id_insn[31:26]==`OR1200_OR32_CUST5);
+   assign on_cust5 = (ex_insn[31:26]==`OR1200_OR32_CUST5);
 `endif
 
 
@@ -1029,7 +1029,8 @@ always @(posedge clk or `OR1200_RST_EVENT rst) begin
 `ifdef OR1200_IMPL_ALU_CUST5
 		// l.cust5 instructions
 		`OR1200_OR32_CUST5:
-			rfwb_op <=  {`OR1200_RFWBOP_KECCAK, 1'b1};
+//			rfwb_op <=  {`OR1200_RFWBOP_KECCAK, 1'b1};
+rfwb_op <=  {`OR1200_RFWBOP_SIGN, 1'b1};
 		  //modify for keccak
 `endif
 

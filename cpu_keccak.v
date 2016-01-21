@@ -398,6 +398,9 @@ wire				abort_ex;
 wire[232:0] sign_u;
 wire[232:0] sign_v;
 wire sign_done;
+wire [31:0] sign_dataout;
+wire [5:0] sign_num;
+wire nrst;
 //
 // Send exceptions to Debug Unit
 //

@@ -7,7 +7,7 @@ reg reset;
 
    assign sign_reset = reset;
 
-always@(posedge sign_en)begin
+always(posedge sign_en)begin
   flag <= 1;
 end
 

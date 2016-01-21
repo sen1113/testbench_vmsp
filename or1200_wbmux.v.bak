@@ -57,9 +57,8 @@ module or1200_wbmux(
 
 	// Internal i/f
 	wb_freeze, rfwb_op,
-	muxin_a, muxin_b, muxin_c, muxin_d, muxin_e,
-	muxout, muxreg, muxreg_valid,
-		    muxin_keccak
+	muxin_a, muxin_b, muxin_c, muxin_d, muxin_e,muxin_keccak,muxin_sign,
+	muxout, muxreg, muxreg_valid
 );
 
 parameter width = `OR1200_OPERAND_WIDTH;
@@ -86,6 +85,7 @@ input	[width-1:0]		muxin_d;
 input	[width-1:0]		muxin_e;
 
    input [width-1:0] 		muxin_keccak;
+   input [width-1:0] 		muxin_sign;
 
 
 output	[width-1:0]		muxout;
@@ -161,16 +161,12 @@ always @(muxin_a or muxin_b or muxin_c or muxin_d or muxin_e or muxin_keccak or 
 `ifdef OR1200_IMPL_ALU_CUST5
 	  `OR1200_RFWBOP_KECCAK : begin
 	     muxout = muxin_keccak;
-<<<<<<< HEAD
-end 
-`endif
-
-
-=======
 	  end
 `endif
+	  `OR1200_RFWBOP_SIGN : begin
+	     muxout = muxin_sign;
+	  end
 
->>>>>>> 7f169c51cbb0d3ab6f48d56938323a98465c39c8
 	  default : begin
 	     muxout = 0;
 	  end

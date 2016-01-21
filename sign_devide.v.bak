@@ -8,8 +8,6 @@ module sign_devide(sign_u,sign_v,sign_num,en,sign_out32);
 
    reg [31:0] 	 out;
 
-assign sign_out32 = out;
-
    always@(sign_num or sign_u or sign_v)begin
       if(en)begin
 	 casez(sign_num[3:0])
