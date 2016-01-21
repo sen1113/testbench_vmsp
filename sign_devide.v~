@@ -1,0 +1,34 @@
+module sign_devide(sign_u,sign_v,sign_num,en,sign_out32);
+input[232:0] sign_u;
+input[232:0] sign_v;
+input[5:0]   sign_num;
+input  en;
+output[31:0] sign_out32;
+
+
+reg[31:0] out;
+
+always@(sign_num or sign_u or sign_v)begin
+if(en)begin
+casez(sign_num[3:0])
+4'b0000:out <= sign_u[31:0];
+4'b0001:out <= sign_u[63:32];
+4'b0010:out <= sign_u[95:64];
+4'b0011:out <= sign_u[127:96];
+4'b0100:out <= sign_u[159:128];
+4'b0101:out <= sign_u[191:160];
+4'b0110:out <= sign_u[223:192];
+4'b0111:out <= {23'b00000_00000_00000_00000_000,sign_u[232:224]};
+4'b1000:out <= sign_v[31:0];
+4'b1001:out <= sign_v[63:32];
+4'b1010:out <= sign_v[95:64];
+4'b1011:out <= sign_v[127:96];
+4'b1100:out <= sign_v[159:128];
+4'b1101:out <= sign_v[191:160];
+4'b1110:out <= sign_v[223:192];
+4'b1111:out <= {23'b00000_00000_00000_00000_000,sign_v[232:224]};
+default:out <= 0;
+endcase
+end
+end
+endmodule

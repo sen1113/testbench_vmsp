@@ -195,7 +195,7 @@ reg 					dc_no_writethrough;
 `ifdef OR1200_IMPL_ALU_CUST5
    reg [4:0] 				cust5_op;
    reg [5:0] 				cust5_limm;
-assign on_cust5 = (ex_insn[31:26]==`OR1200_OR32_CUST5);
+   assign on_cust5 = (ex_insn[31:26]==`OR1200_OR32_CUST5);
 `endif
 
 

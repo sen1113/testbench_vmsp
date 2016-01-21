@@ -666,8 +666,9 @@ or1200_wbmux or1200_wbmux(
 	.muxin_b(lsu_dataout),
 	.muxin_c(sprs_dataout),
 	.muxin_d(ex_pc),
-  .muxin_e(fpu_dataout),
-  .muxin_keccak(keccak_dataout),
+        .muxin_e(fpu_dataout),
+			  .muxin_keccak(keccak_dataout),
+			  .muxin_sign(sign_dataout),
 	.muxout(rf_dataw),
 	.muxreg(wb_forw),
 	.muxreg_valid(wbforw_valid)
@@ -687,8 +688,7 @@ keccak keccak(
 	      .out_ready(out_ready)// to keccak_devide en
 	      );
    //Instantiation of keccak_ctrl
-ke
-ccak_ctrl keccak_ctrl(
+keccak_ctrl keccak_ctrl(
 			.in512(hash512),//from keccak
 			.hash_num(hash_num),//from alu
 			.keccak_en(keccak_en),//from alu
@@ -698,24 +698,26 @@ ccak_ctrl keccak_ctrl(
 			.in_ready(in_ready),//to kecak
 			.on_cust5(on_cust5)
 			);
-ecdsa_sign ecdsa_sign(
-    .clk(clk),
-    .nrst(nrst),
-    .message(hash512),
-    .sign_u(sign_u),
-    .sign_v(sign_v),
-    .done(sign_done)
-    );
-sign_ctrl sign_ctrl(
-.clk(clk),
-.sign_en(out_ready),
-.sign_reset(nrst)
-);
-sign_devide sign_devide(
-.sign_u(sign_u),
-.sign_v(sign_v),
-.sign_num(sign_num),
-.en(sign_done),
-.sign_out32(sign_dataout)
-);
+
+   //Instantiation of ecdsa_sign
+   ecdsa_sign ecdsa_sign(
+			 .clk(clk),
+			 .nrst(nrst),//from sign_ctrl
+			 .message(hash512),//from keccak
+			 .sign_u(sign_u),//to sign_devide
+			 .sign_v(sign_v),//to sign_devide
+			 .done(sign_done)//to sign_devide
+			 );
+   sign_ctrl sign_ctrl(
+		       .clk(clk),
+		       .sign_en(out_ready),//from keccak
+		       .sign_reset(nrst)//to ecdsa_sign
+		       );
+   sign_devide sign_devide(
+			   .sign_u(sign_u),//from ecdsa_devide
+			   .sign_v(sign_v),//from ecdsa_devide
+			   .sign_num(sign_num),//from alu
+			   .en(sign_done),//from ecdsa_devide
+			   .sign_out32(sign_dataout)//to wbmux
+			   );
 endmodule

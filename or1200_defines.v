@@ -614,8 +614,8 @@
 `define OR1200_RFWBOP_SPRS		3'b010
 `define OR1200_RFWBOP_LR		3'b011
 `define OR1200_RFWBOP_FPU		3'b100
-`define OR1200_RFWBOP_KECCAK            3'b111//test
-
+`define OR1200_RFWBOP_KECCAK            3'b111
+`define OR1200_RFWBOP_SIGN              3'b101
 
 // Compare instructions
 `define OR1200_COP_SFEQ       3'b000

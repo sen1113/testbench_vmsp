@@ -57,7 +57,7 @@ module or1200_wbmux(
 
 	// Internal i/f
 	wb_freeze, rfwb_op,
-	muxin_a, muxin_b, muxin_c, muxin_d, muxin_e,muxin_keccak,
+	muxin_a, muxin_b, muxin_c, muxin_d, muxin_e,muxin_keccak,muxin_sign,
 	muxout, muxreg, muxreg_valid
 );
 
@@ -85,6 +85,7 @@ input	[width-1:0]		muxin_d;
 input	[width-1:0]		muxin_e;
 
    input [width-1:0] 		muxin_keccak;
+   input [width-1:0] 		muxin_sign;
 
 
 output	[width-1:0]		muxout;
@@ -162,7 +163,9 @@ always @(muxin_a or muxin_b or muxin_c or muxin_d or muxin_e or muxin_keccak or 
 	     muxout = muxin_keccak;
 	  end
 `endif
-
+	  `OR1200_RFWBOP_SIGN : begin
+	     muxout = muxin_sign;
+	  end
 
 	  default : begin
 	     muxout = 0;

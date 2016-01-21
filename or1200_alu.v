@@ -91,9 +91,8 @@ input   			flag;
    output 			last;
    output [5:0] 		hash_num;
    output 			store_en;
-   output[1:0] 			byte_num;
-
-output [5:0] sign_num;
+   output [1:0] 		byte_num;
+   output [5:0] 		sign_num;
 //
 // Internal wires and regs
 //
@@ -107,6 +106,7 @@ reg	[width-1:0]		extended;
    reg [5:0] 			hash_num;
    reg 				store_en;
    reg [31:0] 			cust5_input;
+   reg [5:0] 			sign_num;
 `endif
 reg				flagforw;
 reg				flagcomp;
@@ -548,10 +548,10 @@ always@(cust5_op or cust5_limm or a)begin
 	  store_en = 1;
 
        end
-       5'b10000://sign storemode
+     5'b10000://sign storemode
        begin
-         sign_num = cust5_limm[5:0];//to sign_devide
-         
+          sign_num = cust5_limm[5:0];//to sign_devide
+       end
      default:
        begin
 	  cust5_input = 0;
