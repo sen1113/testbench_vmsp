@@ -713,7 +713,6 @@ keccak_ctrl keccak_ctrl(
 			 );
    sign_ctrl sign_ctrl(
 		       .clk(clk),
-		       .rst(rst),
 		       .sign_en(out_ready),//from keccak
 		       .sign_reset(nrst)//to ecdsa_sign
 		       );
