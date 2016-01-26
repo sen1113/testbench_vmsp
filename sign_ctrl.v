@@ -1,22 +1,30 @@
-module sign_ctrl(clk,sign_en,sign_reset);
-   input clk;
+module sign_ctrl(clk,rst,sign_en,sign_reset);
+   input clk,rst;
    input sign_en;
    output sign_reset;
-   reg 	  flag;
-reg reset;
+   reg [1:0] stage;
+   reg 	     reset;
 
    assign sign_reset = reset;
 
-always@(posedge sign_en)begin
-  flag <= 1;
-end
-
-   always@(clk)begin
-	   if(sign_en == 1 && flag == 1)begin
-	     reset <= 0;
-	     flag <= 0;
-	     end
-	   else if(flag == 0)
-	     reset <= 1;
+   always@(posedge clk or posedge rst)begin
+      if(rst)begin
+	 stage <= 2'b00;
+	 reset <= 1;
+      end else begin
+         if(sign_en)begin
+	    casex(stage)
+	      2'b00:begin
+	         stage <= 2'b01;
+	         reset <= 0;
+	      end
+	      2'b01:begin
+	         stage <= 2'b10;
+	         reset <= 1;
+	      end
+	      default:reset <= 1;
+	    endcase // casex (stage)
+         end // if (sign_en && clk)
+      end
    end
 endmodule
